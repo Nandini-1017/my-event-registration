@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Event Registration</title>
+
+    <!-- ================= CSS START ================= -->
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+
+            background: linear-gradient(
+                115deg,
+                #568df5,
+                #6559f4,
+                #9142ed
+            );
+        }
+
+        .page {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 28px 18px 44px;
+        }
+
+        .registration-card {
+            width: 100%;
+            max-width: 774px;
+            background: #fcfcff;
+            border-radius: 28px;
+            padding: 32px 48px 42px;
+
+            box-shadow: 0 18px 45px
+                rgba(35, 25, 115, 0.2);
+        }
+
+        /* Header */
+
+        .header {
+            text-align: center;
+            margin-bottom: 34px;
+        }
+
+        .event-icon {
+            width: 92px;
+            height: 88px;
+            border: 5px solid #625cf5;
+            border-radius: 17px;
+            margin: 0 auto 22px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 32px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 42px;
+            font-weight: 800;
+
+            background: linear-gradient(
+                90deg,
+                #3268f3,
+                #7338e9
+            );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header p {
+            color: #68758b;
+            font-size: 16px;
+        }
+
+        /* Form Fields */
+
+        .field {
+            margin-bottom: 23px;
+            min-width: 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #102448;
+        }
+
+        input,
+        select {
+            width: 100%;
+            height: 52px;
+            padding: 0 18px;
+
+            border: 1.5px solid #c9ddff;
+            border-radius: 12px;
+
+            outline: none;
+            background: white;
+
+            font-size: 15px;
+            color: #172b4d;
+        }
+
+        input::placeholder {
+            color: #8b9bb5;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #6b65f5;
+
+            box-shadow: 0 0 0 3px
+                rgba(103, 99, 245, 0.12);
+        }
+
+        /* Two Column Layout */
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0 22px;
+        }
+
+        /* Submit Button */
+
+        button {
+            width: 100%;
+            min-height: 60px;
+            margin-top: 9px;
+
+            border: none;
+            border-radius: 13px;
+
+            color: white;
+
+            background: linear-gradient(
+                100deg,
+                #1688f4,
+                #9840e9
+            );
+
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+
+            box-shadow: 0 10px 22px
+                rgba(95, 79, 226, 0.23);
+
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+        }
+
+        /* ================= SUCCESS PAGE ================= */
+
+        .success-page {
+            display: none;
+            text-align: center;
+            padding: 25px 0;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 50%;
+
+            background: linear-gradient(
+                135deg,
+                #568df5,
+                #9142ed
+            );
+
+            color: white;
+            font-size: 75px;
+
+            box-shadow: 0 15px 30px
+                rgba(95, 79, 226, 0.25);
+        }
+
+        .success-page h1 {
+            font-size: 38px;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .success-page h3 {
+            color: #102448;
+            font-size: 20px;
+        }
+
+        .success-page p {
+            color: #68758b;
+            font-size: 16px;
+            line-height: 1.8;
+            margin: 20px 0 45px;
+        }
+
+        .success-page button {
+            max-width: 300px;
+        }
+
+        /* Mobile Responsive Design */
+
+        @media (max-width: 600px) {
+
+            .registration-card {
+                padding: 28px 20px 30px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .success-page h1 {
+                font-size: 32px;
+            }
+        }
+
+    </style>
+
+    <!-- ================= CSS END ================= -->
+
+</head>
+
+<body>
+
+    <!-- ================= HTML START ================= -->
+
+    <main class="page">
+
+        <section class="registration-card">
+
+            <!-- Registration Header -->
+
+            <header class="header">
+
+                <div class="event-icon">
+                    👤
+                </div>
+
+                <h1>Event Registration</h1>
+
+                <p>
+                    Register for the event by filling in your details
+                </p>
+
+            </header>
+
+
+            <!-- Registration Form -->
+
+            <form id="registrationForm">
+
+                <div class="field">
+
+                    <label for="eventName">
+                        🗓️ Event Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="eventName"
+                        placeholder="Enter event name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="fullName">
+                        👤 Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Enter your full name"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="rollNo">
+                        🪪 Roll No
+                    </label>
+
+                    <input
+                        type="text"
+                        id="rollNo"
+                        placeholder="Enter roll number"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Year and Department -->
+
+                <div class="two-columns">
+
+                    <div class="field">
+
+                        <label for="year">
+                            🎓 Year
+                        </label>
+
+                        <select id="year" required>
+
+                            <option value="">
+                                Select Year
+                            </option>
+
+                            <option>First Year</option>
+                            <option>Second Year</option>
+                            <option>Third Year</option>
+                            <option>Fourth Year</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="department">
+                            🏫 Department
+                        </label>
+
+                        <input
+                            type="text"
+                            id="department"
+                            placeholder="Enter department"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="section">
+                            👥 Section
+                        </label>
+
+                        <input
+                            type="text"
+                            id="section"
+                            placeholder="Enter section"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="field">
+
+                        <label for="students">
+                            🧑‍🤝‍🧑 No. of Students
+                        </label>
+
+                        <input
+                            type="number"
+                            id="students"
+                            min="1"
+                            placeholder="Enter number"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- Mobile Number -->
+
+                <div class="field">
+
+                    <label for="mobile">
+                        📱 Mobile Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="mobile"
+                        placeholder="Enter 10-digit mobile number"
+                        pattern="[0-9]{10}"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Email -->
+
+                <div class="field">
+
+                    <label for="email">
+                        ✉️ Email ID
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email address"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- Submit Button -->
+
+                <button type="submit">
+                    🪄 Submit Registration 🚀
+                </button>
+
+            </form>
+
+
+            <!-- ================= SUCCESS PAGE ================= -->
+
+            <div id="successPage" class="success-page">
+
+                <div class="success-icon">
+                    ✓
+                </div>
+
+                <h1>
+                    Registration<br>
+                    Successful!
+                </h1>
+
+                <h3>
+                    🎉 Thank you for registering!
+                </h3>
+
+                <p>
+                    Your registration has been received successfully.
+                    We look forward to seeing you at the event.
+                </p>
+
+                <button type="button" id="registerAgain">
+                    📝 Register Another Student
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- ================= HTML END ================= -->
+
+
+    <!-- ================= JAVASCRIPT START ================= -->
+
+    <script>
+
+        const form =
+            document.getElementById("registrationForm");
+
+        const mobile =
+            document.getElementById("mobile");
+
+        const successPage =
+            document.getElementById("successPage");
+
+        const registerAgain =
+            document.getElementById("registerAgain");
+
+
+        // Mobile Number Validation
+
+        mobile.addEventListener("input", function () {
+
+            this.value = this.value
+                .replace(/\D/g, "")
+                .slice(0, 10);
+
+        });
+
+
+        // Registration Form Submission
+
+        form.addEventListener("submit", function (event) {
+
+            event.preventDefault();
+
+            // Check all required fields
+
+            if (!form.checkValidity()) {
+
+                form.reportValidity();
+                return;
+
+            }
+
+            // Hide Registration Form
+
+            form.style.display = "none";
+
+            // Hide Header
+
+            document.querySelector(".header").style.display = "none";
+
+            // Show Success Page
+
+            successPage.style.display = "block";
+
+        });
+
+
+        // Register Another Student
+
+        registerAgain.addEventListener("click", function () {
+
+            // Clear Previous Details
+
+            form.reset();
+
+            // Show Registration Form
+
+            form.style.display = "block";
+
+            // Show Header
+
+            document.querySelector(".header").style.display = "block";
+
+            // Hide Success Page
+
+            successPage.style.display = "none";
+
+        });
+
+    </script>
+
+    <!-- ================= JAVASCRIPT END ================= -->
+
+</body>
+
+</html>
